@@ -1,0 +1,56 @@
+=== HISTORY OF PROMPTS - AI-ASSISTED SYSTEM DESIGN ===
+Dự án: Hệ thống Quản lý Chuỗi Phòng hát Karaoke (Karaoke Booking & POS)
+Công cụ AI sử dụng: Claude (Anthropic)
+
+--- PROMPT 1: Xác định bối cảnh và phạm vi hệ thống ---
+Tôi muốn xây dựng một hệ thống quản lý chuỗi phòng hát karaoke đơn giản gồm 3 module cốt lõi: Đặt phòng (Room Booking), Gọi món/POS (Order), và Thanh toán/Hóa đơn (Billing). Hệ thống có 3 loại người dùng: Khách hàng (Customer), Nhân viên lễ tân (Receptionist), và Quản lý chi nhánh (Manager). Hãy đóng vai một System Analyst và tóm tắt phạm vi hệ thống (scope), mục tiêu, và giới hạn (out of scope) cho dự án này trước khi đi vào chi tiết.
+
+--- PROMPT 2: Yêu cầu chức năng chi tiết theo từng module ---
+Dựa trên phạm vi trên, hãy liệt kê Functional Requirements (FR) chi tiết cho từng module:
+1. Room Booking: tạo/sửa/hủy đặt phòng, kiểm tra phòng trống theo khung giờ, trạng thái phòng (Available/Booked/InUse/Cleaning)
+2. Order: nhân viên tạo order đồ ăn/nước uống trong lúc khách hát, cập nhật order, xem menu
+3. Billing: tính tiền phòng theo giờ + tiền order, xuất hóa đơn, xác nhận thanh toán
+Đánh số FR-01, FR-02... theo từng module.
+
+--- PROMPT 3: Yêu cầu User Stories cho từng Actor ---
+Từ các FR ở trên, hãy viết User Stories theo format "Là [actor], tôi muốn [hành động], để [mục đích]" cho cả 3 actor: Customer, Receptionist, Manager. Mỗi actor ít nhất 4 user story bao phủ đầy đủ các module.
+
+--- PROMPT 4: Yêu cầu vẽ Use Case Diagram bằng Mermaid ---
+Hãy vẽ sơ đồ Use Case dạng Mermaid (flowchart) thể hiện rõ 3 actor (Customer, Receptionist, Manager) và các use case tương ứng của họ trong 3 module Room Booking, Order, Billing.
+
+--- PROMPT 5: Yêu cầu bổ sung actor còn thiếu trong Use Case ---
+Sơ đồ Use Case đang thiếu vai trò Quản lý chi nhánh (Manager) đối với việc xem báo cáo doanh thu và quản lý danh sách phòng/giá phòng. Hãy chỉnh sửa lại sơ đồ Use Case để bổ sung đầy đủ các use case này cho Manager.
+
+--- PROMPT 6: Yêu cầu thiết kế ERD chi tiết bằng Mermaid ---
+Hãy thiết kế Entity Relationship Diagram (ERD) dạng Mermaid erDiagram cho hệ thống, tối thiểu gồm các bảng: Branch, Room, Customer, Booking, MenuItem, OrderItem, Invoice, User (nhân viên/quản lý). Xác định rõ khóa chính, khóa ngoại và mối quan hệ 1-N, N-N giữa các bảng.
+
+--- PROMPT 7: Yêu cầu chỉnh sửa và làm sâu sắc thêm ERD ---
+Hãy thêm trường "status" (trạng thái) vào bảng Booking (Pending/Confirmed/CheckedIn/Completed/Cancelled) và bảng Invoice (Unpaid/Paid). Đồng thời bảng Booking và Room hiện đang là quan hệ 1-N, hãy xác nhận lại là đúng vì 1 phòng có thể có nhiều lượt booking theo thời gian. Ngoài ra hãy làm rõ quan hệ N-N giữa Booking và MenuItem thông qua bảng trung gian OrderItem (một booking có thể order nhiều món, một món có thể xuất hiện trong nhiều order).
+
+--- PROMPT 8: Yêu cầu Non-functional Requirements và danh sách API endpoints ---
+Hãy bổ sung phần Non-Functional Requirements (hiệu năng, bảo mật, khả năng mở rộng) đơn giản cho hệ thống, và liệt kê danh sách các RESTful API endpoints (method, path, mô tả, actor được phép truy cập) tương ứng cho 3 module Room Booking, Order, Billing, bao gồm cả API đăng nhập/xác thực.
+
+--- PROMPT 9: Tổng hợp thành tài liệu SRS hoàn chỉnh ---
+Hãy tổng hợp toàn bộ nội dung trên (Scope, FR, User Stories, Use Case Diagram, ERD, NFR, API list) thành một tài liệu SRS (Software Requirements Specification) hoàn chỉnh, có mục lục, đánh số mục rõ ràng, trình bày chuyên nghiệp để tôi format lại thành file Word.
+
+--- PROMPT 10: Yêu cầu sinh source code backend RESTful API ---
+Dựa trên SRS trên, hãy sinh source code backend dạng RESTful API bằng Node.js/Express, chỉ cần đơn giản, có đầy đủ các endpoint chính cho 3 module (Room Booking, Order, Billing), dùng dữ liệu lưu trong SQLite hoặc in-memory để dễ chạy, có cấu trúc project rõ ràng (routes, controllers, models), và kèm theo một số test case cơ bản dùng Jest + Supertest để kiểm tra các API chính.
+
+--- PROMPT 11: Yêu cầu rà soát và sửa lỗi source code ---
+Hãy kiểm tra lại source code đã sinh, đảm bảo project chạy được (npm install && npm test), không có lỗi cú pháp, và các test case đều pass. Nếu có thiếu sót (ví dụ thiếu validate input, thiếu xử lý lỗi 404/400) thì bổ sung cho đầy đủ nhưng vẫn giữ đơn giản.
+
+--- PROMPT 12: Yêu cầu chuyển đổi backend sang Spring Boot (thay đổi công nghệ) ---
+Tôi muốn đổi lại, không dùng Node.js nữa. Hãy chuyển toàn bộ backend sang Spring Boot, dùng Gradle làm build tool, dependencies gồm: Lombok, Spring Boot DevTools, Validation, Spring Web, Spring Data JPA, MySQL Driver. JDK version 17, tên project là "miniproject". Nghiệp vụ 3 module (Room Booking, Order/POS, Billing) giữ nguyên như SRS đã thiết kế.
+
+--- PROMPT 13: Yêu cầu chỉ rõ package structure ---
+Package gốc phải là org.example.miniproject đặt tại src/main/java/org/example/miniproject, và các package con khác như repository, controller, service, dto, exception, entity, config theo đúng chuẩn phân lớp của Spring Boot. Đây là application.properties tôi muốn dùng để kết nối MySQL: [spring.datasource.url=jdbc:mysql://localhost:3306/karaoke_db?createDatabaseIfNotExist=true, spring.datasource.username=root, spring.datasource.password=123456789, spring.jpa.hibernate.ddl-auto=update, ...]. Hãy dùng cấu hình này.
+
+--- PROMPT 14: Yêu cầu sinh đầy đủ entity, repository, service, controller, DTO, exception handler ---
+Hãy sinh đầy đủ các lớp Entity (Branch, Room, User, Customer, Booking, MenuItem, OrderItem, Invoice) ánh xạ đúng theo ERD đã thiết kế ở trên (bao gồm đúng các quan hệ @ManyToOne, @OneToOne), các Repository kế thừa JpaRepository, các Service xử lý nghiệp vụ (kiểm tra trùng lịch phòng, tính tiền hóa đơn theo giờ + order, chuyển trạng thái booking/room), các Controller REST tương ứng, các DTO có validation annotation (@NotNull, @Positive), và một GlobalExceptionHandler xử lý lỗi 400/404/409 rõ ràng.
+
+--- PROMPT 15: Yêu cầu bổ sung test case và seed data ---
+Vì project dùng MySQL thật, hãy cấu hình thêm một profile test dùng H2 in-memory database để chạy được test mà không cần MySQL. Viết các test case bằng JUnit 5 + MockMvc để kiểm tra: tạo phòng thành công/thất bại, luồng đầy đủ booking -> check-in -> order -> check-out -> generate invoice -> thanh toán, kiểm tra lỗi trùng lịch đặt phòng (409), và test cho module Menu Item. Đồng thời thêm một DataSeeder để tự động tạo dữ liệu mẫu khi chạy với MySQL thật.
+
+--- PROMPT 16: Yêu cầu dọn dẹp và hoàn thiện repo để nộp bài ---
+Hãy dọn dẹp lại toàn bộ project (xóa code Node.js cũ không còn dùng), viết file README.md hướng dẫn cách chạy project bằng Gradle, thêm .gitignore phù hợp cho project Java/Gradle, và tổ chức lại thư mục repo cho đúng yêu cầu nộp bài gồm: History_Prompts.txt, System_Design_SRS.docx, và source code project Spring Boot.
+
